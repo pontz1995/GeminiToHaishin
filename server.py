@@ -71,8 +71,8 @@ async def ws_server(websocket):
                             print("[LOG] Turn complete")
                             break
 
-    except websockets.exceptions.ConnectionClosed:
-        print("[LOG] Client disconnected")
+    except websockets.exceptions.ConnectionClosed as e:
+        print("[LOG] Client disconnected code={e.code} reason={e.reason}")
 
     except Exception as e:
         print(f"[ERROR] {e}")
@@ -87,7 +87,7 @@ async def ws_server(websocket):
 async def main():
     print("[LOG] WebSocket server started: ws://localhost:8000")
 
-    async with websockets.serve(ws_server, "localhost", 8000):
+    async with websockets.serve(ws_server, "localhost", 8000, ping_interval=20, ping_timeout=None):
         await asyncio.Future()
 
 

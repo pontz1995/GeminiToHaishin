@@ -7,7 +7,11 @@ WS_URL = "ws://localhost:8000"
 
 
 async def ws_client():
-    async with websockets.connect(WS_URL) as websocket:
+    async with websockets.connect(
+        WS_URL,
+        ping_interval=20,
+        ping_timeout=None
+    ) as websocket:
         print("[LOG] Connected")
 
         while True:
